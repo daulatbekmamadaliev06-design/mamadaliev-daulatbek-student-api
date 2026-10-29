@@ -1,0 +1,40 @@
+name: mamadaliev-daulatbek-student-api
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: studentsdb
+      POSTGRES_USER: student
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - student_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U student -d studentsdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    image: mamadaliev-daulatbek-student-api:v1.0-mamadaliev-daulatbek
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/studentsdb
+      SPRING_DATASOURCE_USERNAME: student
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - student_network
+
+volumes:
+  postgres_data:
+
+networks:
+  student_network:
+    driver: bridge
