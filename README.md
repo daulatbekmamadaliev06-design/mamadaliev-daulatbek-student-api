@@ -1,4 +1,4 @@
-# Mamadaliev Daulatbek Student API - Main Version
+# Mamadaliev Daulatbek Student API - Final Documentation
 
 DevOps Midterm Project
 
