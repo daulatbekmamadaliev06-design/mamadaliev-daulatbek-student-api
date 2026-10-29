@@ -16,6 +16,11 @@ public class StudentController {
         this.repository = repository;
     }
 
+    @GetMapping("/health")
+    public String health() {
+        return "Student API is healthy - Mamadaliev Daulatbek";
+    }
+
     @GetMapping
     public List<Student> getAll() {
         return repository.findAll();
