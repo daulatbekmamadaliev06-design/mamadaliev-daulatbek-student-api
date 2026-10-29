@@ -22,3 +22,4 @@ Student API supports:
 - HTTP 404: Student not found
 
 Implemented by Mamadaliev Daulatbek.
+CI automation test
